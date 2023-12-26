@@ -13,10 +13,10 @@ typedef struct Opcode {
 } Opcode;
 
 /**
- * @enum OpcodeEnum
+ * @enum Opcodes
  * @brief Defines the opcode enumeration for the instruction set of the CPU.
  */
-enum OpcodeEnum {
+enum Opcodes {
     Exit,
     Int_Store,              // allow storing integer in register
     Int_Print,              // print integer contents of a register
@@ -56,7 +56,7 @@ enum OpcodeEnum {
     Trap_Op,                // invoke CPU trap
 };
 
-std::unordered_map<OpcodeEnum, std::byte> opcodeToByte =
+std::unordered_map<Opcodes, std::byte> opcodeToInstruction =
         {
                 {Exit, static_cast<std::byte>(0x00)},
                 {Int_Store, static_cast<std::byte>(0x01)},
