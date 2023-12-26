@@ -98,10 +98,14 @@ std::unordered_map<std::string_view, TokenType> keywords =
                 {"system", System}
         };
 
-TokenType LookupKeywordTokenType(const std::string_view identifier) {
-    auto iter = keywords.find(identifier);
-    if (iter != keywords.end())
-        return iter->second;
+namespace Utils {
+    template<class K, class V>
+    V FindOrDefault(const std::unordered_map<K, V>& m, K key, V default_value) {
+        auto iter = m.find(key);
+        return (iter != m.end()) ? iter->second : default_value;
+    }
+}
 
-    return Identifier;
+TokenType KeywordType(const std::string_view identifier) {
+    return Utils::FindOrDefault(keywords, identifier, Identifier);
 }
