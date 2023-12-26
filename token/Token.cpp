@@ -5,11 +5,24 @@
 #include "string_view"
 #include "unordered_map"
 
+/**
+ * @class Token
+ * @brief Represents a token with a type and a literal value.
+ */
 typedef struct Token {
     std::string_view Type;
     std::string_view Literal;
 } Token;
 
+/**
+ * @enum TokenType
+ * @brief Enumeration of all possible token types in the system.
+ *
+ * This enumeration represents all possible token types that can be encountered
+ * while tokenizing a source code or during parsing. Each token type has a unique
+ * identifier that can be used to distinguish it from other token types.
+ *
+ */
 enum TokenType {
     Illegal, Eof, Identifier, Label, Int, String, Comma,
 
@@ -99,6 +112,17 @@ std::unordered_map<std::string_view, TokenType> keywords =
         };
 
 namespace Utils {
+    /**
+     * @brief Finds the value associated with a given key in the provided unordered map.
+     *        If the key is not found, returns the specified default value.
+     *
+     * @tparam K The type of the key.
+     * @tparam V The type of the value.
+     * @param m The unordered map to search in.
+     * @param key The key to search for.
+     * @param default_value The default value to return if the key is not found.
+     * @return The value associated with the key if found, otherwise the default value.
+     */
     template<class K, class V>
     V FindOrDefault(const std::unordered_map<K, V>& m, K key, V default_value) {
         auto iter = m.find(key);
@@ -106,6 +130,19 @@ namespace Utils {
     }
 }
 
+/**
+ * @fn TokenType KeywordType(const std::string_view identifier)
+ * @brief Determines the token type based on a given identifier.
+ *
+ * This function takes a string_view representing an identifier and returns
+ * the corresponding token type. It searches for the identifier in a pre-defined
+ * unordered map called keywords. If the identifier is found, it returns the
+ * corresponding token type. If the identifier is not found, it returns the
+ * Identifier token type.
+ *
+ * @param identifier The identifier to be checked.
+ * @return The token type corresponding to the identifier.
+ */
 TokenType KeywordType(const std::string_view identifier) {
     return Utils::FindOrDefault(keywords, identifier, Identifier);
 }
